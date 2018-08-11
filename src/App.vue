@@ -1,28 +1,61 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="users">
+    <input type="text" v-model="newUser" v-on:keyup.enter="addUser">
+    <ul>
+      <li v-for="(user, i) in users" :key="i">
+        {{ user.name }}
+        <button @click="removeUser(i)">Remove</button>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { mapState, mapActions, mapMutations } from 'vuex'
 
 export default {
-  name: 'app',
-  components: {
-    HelloWorld
+  name: 'App',
+  data() {
+    return {
+      newUser: ''
+    }
+  },
+  computed: {
+    ...mapState([
+      'users'
+    ])
+  },
+  methods: {
+    ...mapActions([
+      'getUsers',
+      'deleteUser'
+    ]),
+
+    ...mapMutations([
+      'ADD_USER'
+    ]),
+
+    removeUser(i) {
+      this.deleteUser(i)
+    },
+
+    addUser() {
+      let userObj = {
+        name: this.newUser
+      }
+      this.ADD_USER(userObj)
+      this.newUser = ''
+    }
+  },
+  created() {
+    /* eslint-disable */
+    this.getUsers().then()
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+li {
+  list-style: none;
 }
 </style>
