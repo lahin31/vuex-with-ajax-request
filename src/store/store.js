@@ -7,7 +7,6 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
     state: {
-        title: 'Lahin',
         users: []
     },
     mutations: {
