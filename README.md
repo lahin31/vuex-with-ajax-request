@@ -1,4 +1,4 @@
-# vuex-prac
+# Vuex with Ajax request
 
 ## Project setup
 ```
